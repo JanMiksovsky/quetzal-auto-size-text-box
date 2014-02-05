@@ -174,7 +174,7 @@ Polymer( "quetzal-auto-size-text-box", {
       // Raise our own change event (since change events aren't automatically
       // retargetted).
       this.dispatchEvent( new CustomEvent( "change" ));
-    });
+    }.bind( this ));
   },
 
   get selectionEnd() {
