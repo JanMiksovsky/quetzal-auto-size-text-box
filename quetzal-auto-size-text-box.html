@@ -168,6 +168,28 @@ Polymer( "quetzal-auto-size-text-box", {
     }
   },
 
+  ready: function() {
+    this.$.textBox.addEventListener( "change", function() {
+      // Raise our own change event (since change events aren't automatically
+      // retargetted).
+      this.dispatchEvent( new CustomEvent( "change" ));
+    });
+  },
+
+  get selectionEnd() {
+    return this.$.textBox.selectionEnd;
+  },
+  set selectionEnd( value ) {
+    this.$.textBox.selectionEnd = value;
+  },
+
+  get selectionStart() {
+    return this.$.textBox.selectionStart;
+  },
+  set selectionStart( value ) {
+    this.$.textBox.selectionStart = value;
+  },
+
   _escapeHtml: function( html ) {
     return html
      .replace( /&/g, "&amp;" )
