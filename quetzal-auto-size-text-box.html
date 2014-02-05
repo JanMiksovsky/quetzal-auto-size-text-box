@@ -107,12 +107,6 @@ Polymer( "quetzal-auto-size-text-box", {
     this.innerHTML = this._escapeHtml( this.$.textBox.value );
   },
 
-  contentChangedCallback: function() {
-    if ( this.innerHTML !== this.$.textBox.value ) {
-      this.$.textBox.value = this._unescapeHtml( this.innerHTML );
-    }
-  },
-
   attachedCallback: function() {
 
     // For auto-sizing to work, we need the text copy to have the same border,
@@ -151,6 +145,12 @@ Polymer( "quetzal-auto-size-text-box", {
     this._setMinimumHeight();
   },
 
+  contentChangedCallback: function() {
+    if ( this.innerHTML !== this.$.textBox.value ) {
+      this.$.textBox.value = this._unescapeHtml( this.innerHTML );
+    }
+  },
+
   /**
    * Determines the minimum height of the text box in lines.
    *
@@ -169,7 +169,9 @@ Polymer( "quetzal-auto-size-text-box", {
   },
 
   ready: function() {
+    this.super();
     this.$.textBox.addEventListener( "change", function() {
+      console.log( "change" );
       this.autoSize();
       // Raise our own change event (since change events aren't automatically
       // retargetted).
