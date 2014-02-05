@@ -59,7 +59,7 @@
   </style>
 
   <div id="container">
-    <textarea id="textBox" on-change="{{autoSize}}" on-keypress="{{_keypress}}" on-keyup="{{autoSize}}" placeholder="{{placeholder}}" spellcheck="{{spellcheck}}"></textarea>
+    <textarea id="textBox" on-keypress="{{_keypress}}" on-keyup="{{autoSize}}" placeholder="{{placeholder}}" spellcheck="{{spellcheck}}"></textarea>
     <!--
     Use a pre element to hold the copied text in order to automatically convert
     breaks, etc.
@@ -170,6 +170,7 @@ Polymer( "quetzal-auto-size-text-box", {
 
   ready: function() {
     this.$.textBox.addEventListener( "change", function() {
+      this.autoSize();
       // Raise our own change event (since change events aren't automatically
       // retargetted).
       this.dispatchEvent( new CustomEvent( "change" ));
