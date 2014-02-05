@@ -18,7 +18,7 @@
 
   <style>
   :host {
-    display: inline-block;
+    display: block;
   }
 
   #container {
@@ -104,16 +104,16 @@ Polymer( "quetzal-auto-size-text-box", {
     // amount of room as the same text in the text box. Updating the element's
     // content adjusts the element's size, which in turn will make the text box
     // the correct height.
-    this.innerHTML = this.$.textBox.value;
+    this.innerHTML = this._escapeHtml( this.$.textBox.value );
   },
 
   contentChangedCallback: function() {
     if ( this.innerHTML !== this.$.textBox.value ) {
-      this.$.textBox.value = this.innerHTML;
+      this.$.textBox.value = this._unescapeHtml( this.innerHTML );
     }
   },
 
-  enteredView: function() {
+  attachedCallback: function() {
 
     // For auto-sizing to work, we need the text copy to have the same border,
     // padding, and other relevant characteristics as the original text area.
@@ -168,6 +168,15 @@ Polymer( "quetzal-auto-size-text-box", {
     }
   },
 
+  _escapeHtml: function( html ) {
+    return html
+     .replace( /&/g, "&amp;" )
+     .replace( /</g, "&lt;" )
+     .replace( />/g, "&gt;" )
+     .replace( /"/g, "&quot;" )
+     .replace( /'/g, "&#039;" );
+  },
+
   // Speculatively add a line to our copy of the text. We're not sure what the
   // exact effect of typing this character will be, and at this point it's not
   // reflected yet in the text box's content. We speculate that it will add a
@@ -197,8 +206,16 @@ Polymer( "quetzal-auto-size-text-box", {
     var bordersPlusPadding = outerHeight - innerHeight;
     var minHeight = ( this.minimumLines * this._lineHeight ) + bordersPlusPadding;
     textCopy.style.minHeight = minHeight + "px";
-  }
+  },
 
+  _unescapeHtml: function( html ) {
+    return html
+      .replace( /&amp;/g, "&" )
+      .replace( /&lt;/g, "<" )
+      .replace( /&gt;/g, ">" )
+      .replace( /&quot;/g, "\"" )
+      .replace( /&#039;/g, "'" );
+  }
 });
 </script>
 
