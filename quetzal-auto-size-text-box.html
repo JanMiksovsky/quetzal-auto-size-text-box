@@ -145,7 +145,7 @@ Polymer( "quetzal-auto-size-text-box", {
     this._setMinimumHeight();
   },
 
-  contentChangedCallback: function() {
+  contentChanged: function() {
     if ( this.innerHTML !== this.$.textBox.value ) {
       this.$.textBox.value = this._unescapeHtml( this.innerHTML );
     }
